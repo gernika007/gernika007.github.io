@@ -1,0 +1,75 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.title {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.description {
+    font-size: 18px;
+    margin-bottom: 40px;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(8, 40px); /* 8 columns, each 40px wide */
+    grid-template-rows: repeat(8, 40px); /* 8 rows, each 40px high */
+    border: 2px solid black;
+}
+
+.cell {
+    box-sizing: border-box;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px; /* Adjust font size */
+}
+
+.knight {
+    font-size: inherit;
+}
+
+.reachable {
+    background-color: #7FFF00; /* Bright green */
+}
+
+.current {
+    background-color: #FFD700; /* Gold */
+    border: 2px solid black;
+}
+
+.visited {
+    background-color: #333; /* Dark grey */
+}
+
+.invalid {
+    animation: blink 0.5s ease-in-out;
+}
+
+@keyframes blink {
+    0% { background-color: #ff0000; }
+    50% { background-color: transparent; }
+    100% { background-color: #ff0000; }
+}
+
