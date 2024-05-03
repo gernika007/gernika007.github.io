@@ -72,7 +72,6 @@ function clearHighlightedCells() {
 
 function moveKnight(row, col) {
     clearHighlightedCells();
-    highlightReachableCells(row, col);
     const prevRow = knightPos[0];
     const prevCol = knightPos[1];
     if (visited[row][col]) {
@@ -85,30 +84,42 @@ function moveKnight(row, col) {
         highlightReachableCells(prevRow, prevCol); // Highlight reachable cells from the previous position
         return;
     }
-    visited[prevRow][prevCol] = false; // Remove visited class from the previous cell
-    knightPos = [row, col];
-    visited[row][col] = true; // mark cell as visited
+    visited[prevRow][prevCol] = true; // mark previous cell as visited
     visitedCells++; // increment visited cells counter
     counter.innerHTML = `Cells Visited: <strong>${visitedCells}</strong> out of 64`; // update counter text
     
-    // Apply visited class to the current cell only
-    const newKnightCell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
-    newKnightCell.classList.add('visited');
+    // Apply visited class to the previous cell
+    const prevCell = document.querySelector(`.cell[data-row="${prevRow}"][data-col="${prevCol}"]`);
+    prevCell.classList.add('visited');
+
+    // Remove current class from the previous cell
+    prevCell.classList.remove('current');
+
+    knightPos = [row, col];
+    
+    // Apply current class to the current cell
+    const currentCell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+    currentCell.classList.add('current');
 
     // Remove highlights before moving knight
     clearHighlightedCells(); 
-    // Highlight reachable cells from the new position
-    highlightReachableCells(row, col); 
     const prevKnightCell = document.querySelector('.knight');
     if (prevKnightCell) {
         prevKnightCell.innerHTML = ''; // Remove knight from previous cell
         prevKnightCell.classList.remove('knight'); // Remove knight class from previous cell
     }
+    const newKnightCell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
     newKnightCell.classList.add('knight'); // Add knight class to the new cell
     const knight = document.createElement('span');
     knight.textContent = '♞'; // Unicode character for knight
     newKnightCell.appendChild(knight);
+
+    // Highlight reachable cells from the new position
+    highlightReachableCells(row, col);
 }
+
+
+
 
 
 
