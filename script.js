@@ -28,10 +28,19 @@ function createBoard() {
                 }
             });
 
+            // Apply visited class if the cell has been visited
+            if (visited[i][j]) {
+                cell.classList.add('visited');
+            }
+
             board.appendChild(cell);
         }
     }
 }
+
+
+
+
 
 function isValidMove(x1, y1, x2, y2) {
     const dx = Math.abs(x2 - x1);
@@ -63,6 +72,7 @@ function clearHighlightedCells() {
 
 function moveKnight(row, col) {
     clearHighlightedCells();
+    highlightReachableCells(row, col);
     const prevRow = knightPos[0];
     const prevCol = knightPos[1];
     if (visited[row][col]) {
@@ -75,23 +85,34 @@ function moveKnight(row, col) {
         highlightReachableCells(prevRow, prevCol); // Highlight reachable cells from the previous position
         return;
     }
+    visited[prevRow][prevCol] = false; // Remove visited class from the previous cell
     knightPos = [row, col];
     visited[row][col] = true; // mark cell as visited
     visitedCells++; // increment visited cells counter
     counter.innerHTML = `Cells Visited: <strong>${visitedCells}</strong> out of 64`; // update counter text
-    clearHighlightedCells(); // Remove highlights before moving knight
-    highlightReachableCells(row, col); // Highlight reachable cells from the new position
+    
+    // Apply visited class to the current cell only
+    const newKnightCell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+    newKnightCell.classList.add('visited');
+
+    // Remove highlights before moving knight
+    clearHighlightedCells(); 
+    // Highlight reachable cells from the new position
+    highlightReachableCells(row, col); 
     const prevKnightCell = document.querySelector('.knight');
     if (prevKnightCell) {
         prevKnightCell.innerHTML = ''; // Remove knight from previous cell
-        prevKnightCell.classList.remove('knight', 'visited'); // Remove visited class from previous cell
+        prevKnightCell.classList.remove('knight'); // Remove knight class from previous cell
     }
-    const newKnightCell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
-    newKnightCell.classList.add('knight', 'visited'); // Add both classes and 'visited'
+    newKnightCell.classList.add('knight'); // Add knight class to the new cell
     const knight = document.createElement('span');
     knight.textContent = '♞'; // Unicode character for knight
     newKnightCell.appendChild(knight);
 }
+
+
+
+
 
 
 

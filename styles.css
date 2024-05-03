@@ -55,12 +55,11 @@ body {
 }
 
 .current {
-    background-color: #FFD700; /* Gold */
-    border: 2px solid black;
+    background-color: #ffffcc; /* Light yellow */
 }
 
 .visited {
-    background-color: #333; /* Dark grey */
+    background-color: #626464; /* Light grey */
 }
 
 .invalid {
