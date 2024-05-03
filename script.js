@@ -1,9 +1,11 @@
 // script.js
 
 const board = document.getElementById('board');
+const counter = document.getElementById('counter');
 const n = 8; // size of the board
 let knightPos = [0, 0]; // initial position of the knight
 let moveCounter = 1; // initial move counter
+let visitedCells = 0; // counter for visited cells
 const visited = Array.from({ length: n }, () => Array(n).fill(false)); // track visited cells
 
 function createBoard() {
@@ -61,20 +63,38 @@ function clearHighlightedCells() {
 
 function moveKnight(row, col) {
     clearHighlightedCells();
-    highlightReachableCells(row, col);
+    const prevRow = knightPos[0];
+    const prevCol = knightPos[1];
+    if (visited[row][col]) {
+        // Treat the move as invalid if the target cell is already visited
+        const invalidCell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+        invalidCell.classList.add('invalid');
+        setTimeout(() => {
+            invalidCell.classList.remove('invalid');
+        }, 500); // Remove the invalid class after 0.5 seconds
+        highlightReachableCells(prevRow, prevCol); // Highlight reachable cells from the previous position
+        return;
+    }
     knightPos = [row, col];
     visited[row][col] = true; // mark cell as visited
+    visitedCells++; // increment visited cells counter
+    counter.innerHTML = `Cells Visited: <strong>${visitedCells}</strong> out of 64`; // update counter text
+    clearHighlightedCells(); // Remove highlights before moving knight
+    highlightReachableCells(row, col); // Highlight reachable cells from the new position
     const prevKnightCell = document.querySelector('.knight');
     if (prevKnightCell) {
         prevKnightCell.innerHTML = ''; // Remove knight from previous cell
-        prevKnightCell.classList.remove('knight');
+        prevKnightCell.classList.remove('knight', 'visited'); // Remove visited class from previous cell
     }
     const newKnightCell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
-    newKnightCell.classList.add('knight', 'current'); // Add both classes
+    newKnightCell.classList.add('knight', 'visited'); // Add both classes and 'visited'
     const knight = document.createElement('span');
     knight.textContent = '♞'; // Unicode character for knight
     newKnightCell.appendChild(knight);
 }
+
+
+
 
 createBoard();
 moveKnight(0, 0); // initial position of the knight

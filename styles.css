@@ -73,3 +73,11 @@ body {
     100% { background-color: #ff0000; }
 }
 
+.counter {
+    margin-top: 20px;
+}
+
+.counter strong {
+    font-weight: bold;
+}
+
