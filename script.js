@@ -114,6 +114,9 @@ function moveKnight(row, col) {
 
     // Highlight reachable cells from the new position
     highlightReachableCells(row, col);
+    if (document.querySelectorAll('.reachable').length === 0) {
+    document.getElementById('gameOverMessage').style.display = 'block';
+	}
 }
 
 createBoard();
