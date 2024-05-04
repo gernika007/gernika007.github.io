@@ -8,6 +8,8 @@ let moveCounter = 1; // initial move counter
 let visitedCells = 0; // counter for visited cells
 const visited = Array.from({ length: n }, () => Array(n).fill(false)); // track visited cells
 
+
+
 function createBoard() {
     for (let i = 0; i < n; i++) {
         for (let j = 0; j < n; j++) {
@@ -116,6 +118,7 @@ function moveKnight(row, col) {
 
     // Highlight reachable cells from the new position
     highlightReachableCells(row, col);
+	resetIfNoMoves();
 }
 
 
@@ -130,3 +133,63 @@ function moveKnight(row, col) {
 
 createBoard();
 moveKnight(0, 0); // initial position of the knight
+
+// Function to check for game over condition
+function checkGameOver() {
+    let availableMoves = false;
+    for (let move of moves) {
+        const newRow = knightPos[0] + move[0];
+        const newCol = knightPos[1] + move[1];
+        if (isValidMove(knightPos[0], knightPos[1], newRow, newCol) && !visited[newRow][newCol]) {
+            availableMoves = true;
+            break;
+        }
+    }
+    if (!availableMoves) {
+        // No available moves left, game over
+        resetGame();
+    }
+}
+
+// Function to reset the game
+function resetGame() {
+    visited = Array.from({ length: n }, () => Array(n).fill(false)); // Reset visited cells
+    visitedCells = 0; // Reset visited cells counter
+    knightPos = [0, 0]; // Reset knight's position
+    createBoard(); // Recreate the board
+}
+
+function checkAvailableMoves(row, col) {
+    const possibleMoves = [
+        [row - 2, col - 1], [row - 2, col + 1],
+        [row - 1, col - 2], [row - 1, col + 2],
+        [row + 1, col - 2], [row + 1, col + 2],
+        [row + 2, col - 1], [row + 2, col + 1]
+    ];
+
+    console.log("Possible Moves:", possibleMoves); // Debugging output
+
+    let availableMoves = 0;
+    for (let move of possibleMoves) {
+        console.log("Move:", move); // Debugging output
+        const newRow = move[0];
+        const newCol = move[1];
+        console.log("New Row:", newRow, "New Col:", newCol); // Debugging output
+        if (isValidMove(row, col, newRow, newCol) && !visited[newRow][newCol]) {
+            availableMoves++;
+        }
+    }
+    return availableMoves > 0;
+}
+
+
+
+// Function to reset the game if there are no available moves left
+function resetIfNoMoves() {
+    console.log("Checking for available moves...");
+    if (!checkAvailableMoves(knightPos[0], knightPos[1])) {
+        console.log("No available moves left. Resetting the game...");
+        alert("Game Over! No available moves left.");
+        resetGame(); // Reset the game
+    }
+}
