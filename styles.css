@@ -98,4 +98,17 @@ body {
     display: none; /* Initially hide the game over message */
 }
 
+.game-complete-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 255, 0, 0.8);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: none; /* Initially hide the game complete message */
+}
+
+
 
