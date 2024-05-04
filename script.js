@@ -117,7 +117,7 @@ function moveKnight(row, col) {
 
     // Highlight reachable cells from the new position
     highlightReachableCells(row, col);
-    if (document.querySelectorAll('.reachable').length === 0) {
+    if (document.querySelectorAll('.reachable').length === 0 && visitedCells < 64) {
     document.getElementById('gameOverMessage').style.display = 'block';
 	}
 }
