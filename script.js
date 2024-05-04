@@ -137,6 +137,8 @@ function resetGame() {
     knightPos = [0, 0]; // Reset knight's position
     counter.innerHTML = `Cells Visited: <strong>${visitedCells}</strong> out of 64`; // Reset counter text
     clearHighlightedCells(); // Clear any highlighted cells
+    document.getElementById('gameCompleteMessage').style.display = 'none';
+    document.getElementById('gameOverMessage').style.display = 'none';
     createBoard(); // Recreate the board
     moveKnight(0, 0); // Move knight to initial position
 }
