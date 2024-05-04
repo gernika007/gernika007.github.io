@@ -47,7 +47,7 @@ body {
 }
 
 .knight {
-    font-size: inherit;
+    font-size: 40px; /* Increase font size for knight */
 }
 
 .reachable {
