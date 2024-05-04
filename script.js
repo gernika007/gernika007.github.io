@@ -85,6 +85,9 @@ function moveKnight(row, col) {
     visited[prevRow][prevCol] = true; // mark previous cell as visited
     visitedCells++; // increment visited cells counter
     counter.innerHTML = `Cells Visited: <strong>${visitedCells}</strong> out of 64`; // update counter text
+    if (visitedCells === 64) {
+        document.getElementById('gameCompleteMessage').style.display = 'block';
+    }
     
     // Apply visited class to the previous cell
     const prevCell = document.querySelector(`.cell[data-row="${prevRow}"][data-col="${prevCol}"]`);
